@@ -1,0 +1,3 @@
+# Read the documentation: https://github.com/IndraGunawan/api-rate-limit-bundle/blob/master/Resources/doc/usage.md
+indragunawan_api_rate_limit:
+    enabled: true
