@@ -4,6 +4,7 @@ namespace App\Action;
 
 use ApiPlatform\Core\Bridge\Symfony\Validator\Exception\ValidationException;
 use App\Component\Canonicalizer\Canonicalizer;
+use App\Component\Http\Request\JsonRequest;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -42,12 +43,12 @@ class CreateAccount
      */
     public function __invoke(Request $request): Response
     {
-        $json = new ParameterBag(json_decode($request->getContent(), true) ?? []);
+        $request = new JsonRequest($request);
 
         $user = new User();
-        $user->setEmail($json->get('email'));
-        $user->setUsername($json->get('username'));
-        $user->setPlainPassword($json->get('plain_password'));
+        $user->setEmail($request->json->get('email'));
+        $user->setUsername($request->json->get('username'));
+        $user->setPlainPassword($request->json->get('plain_password'));
 
         $violations = $this->validator->validate($user, null);
 
