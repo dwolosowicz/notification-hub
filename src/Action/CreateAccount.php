@@ -43,12 +43,12 @@ class CreateAccount
      */
     public function __invoke(Request $request): Response
     {
-        $request = new JsonRequest($request);
+        $jsonRequest = new JsonRequest($request);
 
         $user = new User();
-        $user->setEmail($request->json->get('email'));
-        $user->setUsername($request->json->get('username'));
-        $user->setPlainPassword($request->json->get('plain_password'));
+        $user->setEmail($jsonRequest->json->get('email'));
+        $user->setUsername($jsonRequest->json->get('username'));
+        $user->setPlainPassword($jsonRequest->json->get('plainPassword'));
 
         $violations = $this->validator->validate($user, null);
 

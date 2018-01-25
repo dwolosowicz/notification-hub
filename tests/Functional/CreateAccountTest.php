@@ -15,7 +15,7 @@ class CreateAccountTest extends WebTestCase
         $client = $this->postJson('/api/account', [
             'username' => 'johndoe',
             'email' => 'john@doe.com',
-            'plain_password' => 'random_password'
+            'plainPassword' => 'random_password'
         ]);
 
         $this->assertEquals(204, $client->getResponse()->getStatusCode());

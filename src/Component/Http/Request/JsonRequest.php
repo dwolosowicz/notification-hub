@@ -25,4 +25,14 @@ class JsonRequest
 
         return new ParameterBag($json ?: []);
     }
+
+    public function isJsonRequest(): bool
+    {
+        return $this->request->getContentType() === 'json';
+    }
+
+    public function getRequest(): Request
+    {
+        return $this->request;
+    }
 }
