@@ -2,12 +2,12 @@
 
 namespace App\Tests\Functional;
 
-use App\Tests\Utils\Requestable;
+use App\Tests\Utils\RequestUtils;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class CreateAccountTest extends WebTestCase
 {
-    use Requestable;
+    use RequestUtils;
 
     /** @test */
     public function creates_an_account()

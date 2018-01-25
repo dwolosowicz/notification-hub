@@ -1,0 +1,11 @@
+nelmio_api_doc:
+    documentation:
+        info:
+            title: Notification Hub
+            description: ''
+            version: false
+    routes: # to filter documented routes
+        path_patterns:
+            - ^(?!/api/doc)
+            - ^(?!/api/docs)
+            - ^(?!/api/{index})$

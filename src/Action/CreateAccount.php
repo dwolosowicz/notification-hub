@@ -14,6 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Swagger\Annotations as SWG;
 
 class CreateAccount
 {
@@ -40,6 +41,24 @@ class CreateAccount
      *     methods={"POST"},
      *     path="/api/account"
      * )
+     *
+     * @SWG\Parameter(
+     *     name="account",
+     *     description="The new account credentials",
+     *     in="body",
+     *     @SWG\Schema(properties={
+     *         @SWG\Property(title="username", type="string", property="username"),
+     *         @SWG\Property(title="email", type="string", property="email"),
+     *         @SWG\Property(title="plainPassword", type="string", property="plainPassword")
+     *     })
+     * )
+     *
+     * @SWG\Response(
+     *     response=204,
+     *     description="Account has been created"
+     * )
+     *
+     * @SWG\Tag(name="Account")
      */
     public function __invoke(Request $request): Response
     {

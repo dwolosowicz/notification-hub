@@ -15,6 +15,9 @@
         <env name="APP_SECRET" value="s$cretf0rt3st" />
         <env name="CORS_ALLOW_ORIGIN" value="=^https?://localhost:?[0-9]*$" />
         <env name="SHELL_VERBOSITY" value="-1" />
+        <env name="JWT_PRIVATE_KEY_PATH" value="var/jwt/private.pem" />
+        <env name="JWT_PUBLIC_KEY_PATH" value="var/jwt/public.pem" />
+        <env name="JWT_PASSPHRASE" value="pass" />
         <!-- define your env variables for the test env here -->
     </php>
 

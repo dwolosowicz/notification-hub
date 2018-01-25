@@ -89,6 +89,9 @@
     "doctrine/orm": {
         "version": "v2.6.0"
     },
+    "exsyst/swagger": {
+        "version": "v0.3.2"
+    },
     "indragunawan/api-rate-limit-bundle": {
         "version": "0.2",
         "recipe": {
@@ -112,6 +115,15 @@
     },
     "namshi/jose": {
         "version": "7.2.3"
+    },
+    "nelmio/api-doc-bundle": {
+        "version": "3.0",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "3.0",
+            "ref": "d76d09603a98c2e2b78ef038ef8a961f51b86da0"
+        }
     },
     "nelmio/cors-bundle": {
         "version": "1.5",
@@ -266,6 +278,9 @@
             "ref": "cda8b550123383d25827705d05a42acf6819fe4e"
         }
     },
+    "symfony/security": {
+        "version": "v4.0.3"
+    },
     "symfony/security-bundle": {
         "version": "3.3",
         "recipe": {
@@ -331,5 +346,8 @@
     },
     "zendframework/zend-eventmanager": {
         "version": "3.2.0"
+    },
+    "zircote/swagger-php": {
+        "version": "2.0.13"
     }
 }

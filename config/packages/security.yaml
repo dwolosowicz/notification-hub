@@ -11,7 +11,8 @@ security:
 
     firewalls:
         dev:
-            pattern: ^/(_(profiler|wdt)|css|images|js)/
+#            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            pattern: ^/_((profiler|wdt)|css|images|js)
             security: false
 
         login:
@@ -24,6 +25,11 @@ security:
                 success_handler:          lexik_jwt_authentication.handler.authentication_success
                 failure_handler:          lexik_jwt_authentication.handler.authentication_failure
                 require_previous_session: false
+
+        docs:
+            pattern: ^/api/doc
+            provider: default
+            http_basic: ~
 
         register:
             pattern:  ^/api/account$

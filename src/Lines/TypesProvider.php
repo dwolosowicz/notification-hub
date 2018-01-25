@@ -15,8 +15,8 @@ class TypesProvider implements ContainerAwareInterface
     {
         $linesConfig = $this->container->getParameter('lines');
 
-        return array_map(function($code, $isEnabled) {
-            return new LineConfig($code, $isEnabled);
+        return array_map(function(...$args) {
+            return new LineConfig(...$args);
         }, $linesConfig, array_keys($linesConfig));
     }
 
