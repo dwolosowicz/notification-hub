@@ -15,11 +15,14 @@ class TypesProvider implements ContainerAwareInterface
     {
         $linesConfig = $this->container->getParameter('lines');
 
-        return array_map(function(...$args) {
-            return new LineConfig(...$args);
-        }, $linesConfig, array_keys($linesConfig));
+        return array_map(function($lineTypeCode, $lineTypeStatus) {
+            return new LineConfig($lineTypeCode, (bool) $lineTypeStatus);
+        }, array_keys($linesConfig), $linesConfig);
     }
 
+    /**
+     * @required
+     */
     public function setContainer(ContainerInterface $container = null)
     {
         $this->container = $container;

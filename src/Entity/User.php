@@ -2,8 +2,11 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\AdvancedUserInterface;
+use Symfony\Component\Serializer\Annotation\MaxDepth;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
@@ -92,12 +95,12 @@ class User implements AdvancedUserInterface
         $this->roles = ['ROLE_USER'];
     }
 
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getUsername(): string
+    public function getUsername(): ?string
     {
         return $this->username;
     }
@@ -107,7 +110,7 @@ class User implements AdvancedUserInterface
         $this->username = $username;
     }
 
-    public function getUsernameCanonical(): string
+    public function getUsernameCanonical(): ?string
     {
         return $this->usernameCanonical;
     }
@@ -117,7 +120,7 @@ class User implements AdvancedUserInterface
         $this->usernameCanonical = $usernameCanonical;
     }
 
-    public function getEmail(): string
+    public function getEmail(): ?string
     {
         return $this->email;
     }
@@ -127,7 +130,7 @@ class User implements AdvancedUserInterface
         $this->email = $email;
     }
 
-    public function getEmailCanonical(): string
+    public function getEmailCanonical(): ?string
     {
         return $this->emailCanonical;
     }
@@ -147,7 +150,7 @@ class User implements AdvancedUserInterface
         $this->password = $password;
     }
 
-    public function getPlainPassword(): string
+    public function getPlainPassword(): ?string
     {
         return $this->plainPassword;
     }

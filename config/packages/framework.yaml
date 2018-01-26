@@ -30,4 +30,5 @@ framework:
         #app: cache.adapter.apcu
 
     serializer:
-        name_converter:
+        enabled: true
+        enable_annotations: true

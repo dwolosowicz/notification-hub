@@ -2,13 +2,19 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiSubresource;
 use Doctrine\Common\Collections\ArrayCollection;
 use ApiPlatform\Core\Annotation\ApiResource;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ChannelRepository")
- * @ApiResource()
+ * @ApiResource(attributes={
+ *     "normalization_context"={"groups"={"default"}},
+ *     "denormalization_context"={"groups"={"default"}}
+ * })
  */
 class Channel
 {
@@ -16,29 +22,45 @@ class Channel
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     *
+     * @Groups({"default"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string")
+     *
+     * @Groups({"default"})
      */
     private $name;
 
     /**
      * @ORM\Column(type="text")
+     *
+     * @Groups({"default"})
      */
     private $description;
 
     /**
      * @ORM\Column(type="boolean")
+     *
+     * @Groups({"default"})
      */
     private $isActive;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Line", inversedBy="channels")
      * @ORM\JoinTable(name="channels_lines")
+     *
+     * @Groups({"default"})
+     * @ApiSubresource()
      */
     private $lines;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User")
+     */
+    private $user;
 
     public function __construct()
     {
@@ -80,7 +102,7 @@ class Channel
         $this->isActive = $isActive;
     }
 
-    public function getLines(): ArrayCollection
+    public function getLines(): Collection
     {
         return $this->lines;
     }
@@ -92,6 +114,10 @@ class Channel
 
     public function addLine(Line $line): void
     {
+        if ($this->lines->contains($line)) {
+            return;
+        }
+
         $this->lines->add($line);
 
         $line->addChannel($this);
@@ -99,8 +125,22 @@ class Channel
 
     public function removeLine(Line $line): void
     {
+        if (!$this->lines->contains($line)) {
+            return;
+        }
+
         $this->lines->removeElement($line);
 
         $line->removeChannel($this);
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): void
+    {
+        $this->user = $user;
     }
 }
