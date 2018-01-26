@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use App\Annotation\UserAware;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -11,6 +12,7 @@ use App\Validator\Constraints as AppAssert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\LineRepository")
+ * @UserAware()
  * @ApiResource(attributes={
  *     "normalization_context"={"groups"={"default"}},
  *     "denormalization_context"={"groups"={"default"}}
