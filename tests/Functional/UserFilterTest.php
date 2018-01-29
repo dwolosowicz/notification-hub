@@ -17,10 +17,10 @@ class UserFilterTest extends TestCase
         $this->factory->create(Channel::class, ['user' => $user1]);
         $this->factory->create(Channel::class, ['user' => $user2]);
 
-        $this->client->request('POST', '/api/jwt/token', [
-            '_username' => $user1->getUsername(),
-            '_password' => 'password'
-        ]);
+        $this->client->request('POST', '/api/jwt/token', [], [], ['CONTENT_TYPE' => 'application/json', 'HTTP_ACCEPT' => 'application/json'], json_encode([
+            'username' => $user1->getUsername(),
+            'password' => 'password'
+        ]));
 
         $jsonBody = json_decode($this->client->getResponse()->getContent(), true);
 
@@ -30,7 +30,7 @@ class UserFilterTest extends TestCase
             [],
             [],
             [
-                'HTTP_CONTENT_TYPE' => 'application/json',
+                'CONTENT_TYPE' => 'application/json',
                 'HTTP_ACCEPT' => 'application/json',
                 'HTTP_AUTHORIZATION' => "Bearer {$jsonBody['token']}"
             ]

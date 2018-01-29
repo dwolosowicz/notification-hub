@@ -12,10 +12,10 @@ class JSONWebTokenTest extends TestCase
     {
         $user = $this->factory->create(User::class);
 
-        $this->client->request('POST', '/api/jwt/token', [
-            '_username' => $user->getUsername(),
-            '_password' => 'password'
-        ]);
+        $this->client->request('POST', '/api/jwt/token', [], [], ['CONTENT_TYPE' => 'application/json', 'HTTP_ACCEPT' => 'application/json'], json_encode([
+            'username' => $user->getUsername(),
+            'password' => 'password'
+        ]));
 
         $response = $this->client->getResponse();
 
@@ -26,10 +26,10 @@ class JSONWebTokenTest extends TestCase
     /** @test */
     public function fails_if_an_account_doesnt_exist()
     {
-        $this->client->request('POST', '/api/jwt/token', [
-            '_username' => 'fake_account',
-            '_password' => 'password'
-        ]);
+        $this->client->request('POST', '/api/jwt/token', [], [], ['CONTENT_TYPE' => 'application/json', 'HTTP_ACCEPT' => 'application/json'], json_encode([
+            'username' => 'fake_account',
+            'password' => 'password'
+        ]));
 
         $response = $this->client->getResponse();
 
