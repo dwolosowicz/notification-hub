@@ -7,7 +7,6 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 use Symfony\Component\Serializer\Annotation\MaxDepth;
-use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
@@ -26,8 +25,6 @@ class User implements AdvancedUserInterface
 
     /**
      * @ORM\Column(type="string", unique=true)
-     *
-     * @Assert\NotBlank()
      */
     private $username;
 
@@ -38,9 +35,6 @@ class User implements AdvancedUserInterface
 
     /**
      * @ORM\Column(type="string", unique=true)
-     *
-     * @Assert\NotBlank()
-     * @Assert\Email()
      */
     private $email;
 
@@ -53,12 +47,6 @@ class User implements AdvancedUserInterface
      * @ORM\Column(type="string")
      */
     private $password;
-
-    /**
-     * @Assert\NotBlank()
-     * @Assert\Length(max=4096)
-     */
-    private $plainPassword;
 
     /**
      * @ORM\Column(type="json_array")
@@ -150,16 +138,6 @@ class User implements AdvancedUserInterface
         $this->password = $password;
     }
 
-    public function getPlainPassword(): ?string
-    {
-        return $this->plainPassword;
-    }
-
-    public function setPlainPassword(?string $plainPassword): void
-    {
-        $this->plainPassword = $plainPassword;
-    }
-
     public function getSalt(): ?string
     {
         return null;
@@ -192,6 +170,5 @@ class User implements AdvancedUserInterface
 
     public function eraseCredentials(): void
     {
-        $this->plainPassword = null;
     }
 }
