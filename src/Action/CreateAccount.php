@@ -6,6 +6,7 @@ use ApiPlatform\Core\Bridge\Symfony\Validator\Exception\ValidationException;
 use App\Component\Canonicalizer\Canonicalizer;
 use App\Component\Http\Request\JsonRequest;
 use App\Entity\User;
+use App\Model\Request\Account;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\ParameterBag;
@@ -49,7 +50,7 @@ class CreateAccount
      *     @SWG\Schema(properties={
      *         @SWG\Property(title="username", type="string", property="username"),
      *         @SWG\Property(title="email", type="string", property="email"),
-     *         @SWG\Property(title="plainPassword", type="string", property="plainPassword")
+     *         @SWG\Property(title="password", type="string", property="password")
      *     })
      * )
      *
@@ -64,22 +65,25 @@ class CreateAccount
     {
         $jsonRequest = new JsonRequest($request);
 
-        $user = new User();
-        $user->setEmail($jsonRequest->json->get('email'));
-        $user->setUsername($jsonRequest->json->get('username'));
-        $user->setPlainPassword($jsonRequest->json->get('plainPassword'));
+        $account = new Account(
+            $jsonRequest->json->get('username', ''),
+            $jsonRequest->json->get('email', ''),
+            $jsonRequest->json->get('password', '')
+        );
 
-        $violations = $this->validator->validate($user, null);
+        $violations = $this->validator->validate($account, null);
 
         if (0 !== \count($violations)) {
             throw new ValidationException($violations);
         }
 
+        $user = new User();
+        $user->setUsername($account->getUsername());
         $user->setUsernameCanonical($this->canonicalizer->canonicalize($user->getUsername()));
+        $user->setEmail($account->getEmail());
         $user->setEmailCanonical($this->canonicalizer->canonicalize($user->getEmail()));
-
         $user->setPassword(
-            $this->passwordEncoder->encodePassword($user, $user->getPlainPassword())
+            $this->passwordEncoder->encodePassword($user, $account->getPassword())
         );
 
         $this->entityManager->persist($user);
