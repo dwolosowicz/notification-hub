@@ -2,7 +2,6 @@
 
 namespace App\Entity;
 
-use ApiPlatform\Core\Annotation\ApiSubresource;
 use App\Annotation\UserAware;
 use Doctrine\Common\Collections\ArrayCollection;
 use ApiPlatform\Core\Annotation\ApiResource;
@@ -57,7 +56,6 @@ class Channel
      * @ORM\JoinTable(name="channels_lines")
      *
      * @Groups({"default"})
-     * @ApiSubresource()
      */
     private $lines;
 
@@ -69,6 +67,8 @@ class Channel
     public function __construct()
     {
         $this->lines = new ArrayCollection();
+        $this->isActive = false;
+        $this->description = '';
     }
 
     public function getId(): int

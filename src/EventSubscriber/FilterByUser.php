@@ -11,7 +11,7 @@ use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-class UserFilterConfigurator implements EventSubscriberInterface
+class FilterByUser implements EventSubscriberInterface
 {
     /** @var EntityManagerInterface */
     protected $em;
@@ -31,20 +31,22 @@ class UserFilterConfigurator implements EventSubscriberInterface
 
     public static function getSubscribedEvents()
     {
-        return [KernelEvents::REQUEST => [['configureFilter']]];
+        return [KernelEvents::REQUEST => ['configureFilter']];
     }
 
     public function configureFilter(): void
     {
-        if ($user = $this->getUser()) {
-            /** @var UserFilter $filter */
-            $filter = $this->em->getFilters()->enable('user_filter');
-            $filter->setParameter('id', $user->getId());
-            $filter->setAnnotationReader($this->reader);
+        if (!$user = $this->getUser()) {
+            return;
         }
+
+        /** @var UserFilter $filter */
+        $filter = $this->em->getFilters()->enable('user_filter');
+        $filter->setParameter('id', $user->getId());
+        $filter->setAnnotationReader($this->reader);
     }
 
-    protected function getUser(): User
+    protected function getUser(): ?User
     {
         $token = $this->tokenStorage->getToken();
 
