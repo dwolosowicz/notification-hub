@@ -29,6 +29,8 @@ class Channel
     /**
      * @ORM\Column(type="string")
      *
+     * @Assert\NotBlank()
+     *
      * @Groups({"default"})
      */
     private $name;
@@ -62,9 +64,15 @@ class Channel
      */
     private $user;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Notification", mappedBy="channel")
+     */
+    private $notifications;
+
     public function __construct()
     {
         $this->lines = new ArrayCollection();
+        $this->notifications = new ArrayCollection();
         $this->isActive = false;
         $this->description = '';
     }
@@ -144,5 +152,37 @@ class Channel
     public function setUser(?User $user): void
     {
         $this->user = $user;
+    }
+
+    public function getNotifications(): Collection
+    {
+        return $this->notifications;
+    }
+
+    public function setNotifications(Notification $notifications): void
+    {
+        $this->notifications = $notifications;
+    }
+
+    public function addNotification(Notification $notification): void
+    {
+        if ($this->notifications->contains($notification)) {
+            return;
+        }
+
+        $this->notifications->add($notification);
+
+        $notification->setChannel($this);
+    }
+
+    public function removeNotification(Notification $notification): void
+    {
+        if (!$this->notifications->contains($notification)) {
+            return;
+        }
+
+        $this->notifications->removeElement($notification);
+
+        $notification->setChannel(null);
     }
 }

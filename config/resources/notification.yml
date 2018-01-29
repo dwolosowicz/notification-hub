@@ -1,0 +1,12 @@
+App\Entity\Notification:
+    collectionOperations:
+        post:
+            method: "POST"
+    itemOperations:
+        get:
+            method: "GET"
+    attributes:
+        normalization_context:
+            groups: ["default_read"]
+        denormalization_context:
+            groups: ["default_write"]
