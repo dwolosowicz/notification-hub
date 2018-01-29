@@ -1,2 +1,0 @@
-api_jwt_token:
-    path: /api/jwt/token
