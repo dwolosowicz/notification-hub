@@ -13,10 +13,6 @@ use App\Validator\Constraints as AppAssert;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\LineRepository")
  * @UserAware()
- * @ApiResource(attributes={
- *     "normalization_context"={"groups"={"default"}},
- *     "denormalization_context"={"groups"={"default"}}
- * })
  */
 class Line
 {

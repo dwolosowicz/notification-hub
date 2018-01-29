@@ -1,0 +1,5 @@
+App\Entity\Line:
+    normalization_context:
+        groups: ["default"]
+    denormalization_context:
+        groups: ["default"]

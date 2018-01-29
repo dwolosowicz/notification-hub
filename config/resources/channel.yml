@@ -1,0 +1,5 @@
+App\Entity\Channel:
+    normalization_context:
+        groups: ["default"]
+    denormalization_context:
+        groups: ["default"]
