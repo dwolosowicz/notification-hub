@@ -51,6 +51,8 @@ class Channel
      * @ORM\ManyToMany(targetEntity="App\Entity\Line", inversedBy="channels")
      * @ORM\JoinTable(name="channels_lines")
      *
+     * @AppAssert\Owned()
+     *
      * @Groups({"default"})
      */
     private $lines;

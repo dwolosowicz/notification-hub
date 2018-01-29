@@ -36,6 +36,7 @@ class Line
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Channel", mappedBy="lines")
+     * @AppAssert\Owned()
      */
     private $channels;
 
